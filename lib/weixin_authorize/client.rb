@@ -4,6 +4,7 @@ require 'digest/md5'
 module WeixinAuthorize
 
   class Client
+    include Api::Card
     include Api::User
     include Api::Menu
     include Api::Custom
