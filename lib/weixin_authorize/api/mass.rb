@@ -3,7 +3,13 @@ module WeixinAuthorize
   module Api
     module Mass
 
-      MSG_TYPE = ["mpnews", "image", "text", "voice", "mpvideo"].freeze
+      # 获取自动回复规则
+      # https://api.weixin.qq.com/cgi-bin/get_current_autoreply_info?access_token=ACCESS_TOKEN
+      def mass_autoreply_rules
+        http_get('/get_current_autoreply_info')
+      end
+
+      MSG_TYPE = ["mpnews", "image", "text", "voice", "mpvideo", "wxcard"].freeze
 
       # media_info= {"media_id" media_id}
       # https://api.weixin.qq.com/cgi-bin/message/mass/sendall?access_token=ACCESS_TOKEN
@@ -55,7 +61,7 @@ module WeixinAuthorize
         def generate_media(msg_type, media_info, option)
           msg_type = msg_type.to_s
           if not MSG_TYPE.include?(msg_type)
-            raise MediaTypeException, "#{msg_type} is a invalid msg_type"
+            raise MediaTypeException, "#{msg_type} is an invalid msg_type"
           end
           {
             msg_type  => convert_media_info(msg_type, media_info),

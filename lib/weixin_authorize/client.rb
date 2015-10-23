@@ -4,8 +4,9 @@ require 'digest/md5'
 module WeixinAuthorize
 
   class Client
-    include Api::Card
+    include Api::Poi
     include Api::User
+    include Api::Card
     include Api::Menu
     include Api::Custom
     include Api::Groups
@@ -18,14 +19,17 @@ module WeixinAuthorize
     attr_accessor :app_id, :app_secret, :expired_at # Time.now + expires_in
     attr_accessor :access_token, :redis_key, :custom_access_token
     attr_accessor :jsticket, :jsticket_expired_at, :jsticket_redis_key
+    attr_accessor :apiticket, :apiticket_expired_at, :apiticket_redis_key
 
     # options: redis_key, custom_access_token
     def initialize(app_id, app_secret, options={})
       @app_id     = app_id
       @app_secret = app_secret
       @jsticket_expired_at = @expired_at = Time.now.to_i
+      @apiticket_expired_at = @expired_at = Time.now.to_i
       @redis_key  = security_redis_key(options[:redis_key] || "weixin_#{app_id}")
       @jsticket_redis_key = security_redis_key("js_sdk_#{app_id}")
+      @apiticket_redis_key = security_redis_key("api_ticket_#{app_id}")
       @custom_access_token = options[:custom_access_token]
     end
 
@@ -51,6 +55,14 @@ module WeixinAuthorize
 
     def get_jsticket
       jsticket_store.jsticket
+    end
+
+    def apiticket_store
+      ApiTicket::Store.init_with(self)
+    end
+
+    def get_apiticket
+      apiticket_store.apiticket
     end
 
     # 获取js sdk 签名包
