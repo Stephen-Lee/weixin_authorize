@@ -197,8 +197,10 @@ module WeixinAuthorize
         check_required_options(params, INVOKE_GROUPON_REQUIRED_FIELDS)
         {card:{
             card_type: 'GROUPON',
-            base_info: bash_info,
-            deal_detail: params[:deal_detail]}
+            groupn:{
+              base_info: bash_info,
+              deal_detail: params[:deal_detail]}
+            }
         }
       end
     end
@@ -214,9 +216,11 @@ module WeixinAuthorize
         check_required_options(params, INVOKE_CASH_REQUIRED_FIELDS)
         {card:{
             card_type: 'CASH',
-            base_info: bash_info,
-            least_cost: params[:least_cost],
-            reduce_cost: params[:reduce_cost], }
+            cash:{
+              base_info: bash_info,
+              least_cost: params[:least_cost],
+              reduce_cost: params[:reduce_cost], }
+            }
         }
       end
     end
@@ -249,9 +253,11 @@ module WeixinAuthorize
         }.merge(params)
         check_required_options(params, INVOKE_GIFT_REQUIRED_FIELDS)
         {card:{
-            card_type: 'DISCOUNT',
-            base_info: bash_info,
-            gift: params[:gift]}
+            card_type: 'GIFT',
+            gift:{
+              base_info: bash_info,
+              gift: params[:gift]}
+            }
         }
       end
     end
@@ -266,8 +272,10 @@ module WeixinAuthorize
         check_required_options(params, INVOKE_GENERALCOUPON_REQUIRED_FIELDS)
         {card:{
             card_type: 'GENERAL_COUPON',
-            base_info: bash_info,
-            default_detail: params[:default_detail]}
+            general_coupon:{
+              base_info: bash_info,
+              default_detail: params[:default_detail]}
+           }
         }
       end
     end
