@@ -12,6 +12,7 @@ module WeixinAuthorize
     include Api::Groups
     include Api::Qrcode
     include Api::Media
+    include Api::Merchant
     include Api::Mass
     include Api::Oauth
     include Api::Template
