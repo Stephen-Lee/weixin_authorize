@@ -51,6 +51,7 @@ module WeixinAuthorize
     41007 => "缺少子菜单数据",
     41008 => "缺少oauth code",
     41009 => "缺少openid",
+    41011 => "缺少必要的参数!",
     42001 => "access_token超时",
     42002 => "refresh_token超时",
     42003 => "oauth_code超时",
