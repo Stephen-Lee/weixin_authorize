@@ -24,11 +24,13 @@ module WeixinAuthorize
       def send_template_msg(touser, template_id, url, topcolor, data, options={})
         msg = {
           touser: touser, template_id: template_id,
-          url: url, topcolor: topcolor, data: data,
-          appid: options[:appid],
-          pagepath: options[:pagepath],
-          miniprogram: options[:miniprogram]
+          url: url, topcolor: topcolor, data: data
         }
+        if (options[:appid] && options[:pagepath]) 
+          msg[:miniprogram] = {}
+          msg[:miniprogram][:appid] = options[:appid]
+          msg[:miniprogram][:pagepath] = options[:pagepath]
+        end
         http_post("/message/template/send", msg)
       end
 
