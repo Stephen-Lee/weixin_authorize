@@ -21,10 +21,13 @@ module WeixinAuthorize
       end
 
       # 发送模板消息
-      def send_template_msg(touser, template_id, url, topcolor, data)
+      def send_template_msg(touser, template_id, url, topcolor, data, options={})
         msg = {
           touser: touser, template_id: template_id,
-          url: url, topcolor: topcolor, data: data
+          url: url, topcolor: topcolor, data: data,
+          appid: options[:appid],
+          pagepath: options[:pagepath],
+          miniprogram: options[:miniprogram]
         }
         http_post("/message/template/send", msg)
       end
